@@ -23,4 +23,7 @@ urlpatterns = [
     path('', views.home , name='home'),
     path('register/', views.logueado, name='register'),
     path('tasks/', views.tasks, name='tasks'),
+    path('logout/', views.signout, name='signout'),
+    path('signin/', views.signin, name='signin'),
+
 ]
