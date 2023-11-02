@@ -3,6 +3,7 @@
 
 #VsCode
 .vscode
+staticfiles/admin
 
 ### Django ###
 *.log
