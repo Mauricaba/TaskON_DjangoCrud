@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,25 +26,35 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p)*ry!wqof==d29qy=lvz+63^+4rog=c6yi#pe1+8fb!j*hs*q'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
 
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+]
+
+PROJECTS_APPS = [
     'tasks',
 ]
+
+THIRD_PARTY_APPS = [
+
+]
+
+INSTALLED_APPS = DJANGO_APPS + PROJECTS_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,12 +92,12 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'eqvdrvgase',
-        'HOST': '127.0.0.1', 
-        'PORT': '5433',
+        'ENGINE': os.environ.get('SQLENGINE'),
+        'NAME': os.environ.get('SQLNAME'),
+        'USER': os.environ.get('SQLUSER'),
+        'PASSWORD': os.environ.get('SQLPASSWORD'),
+        'HOST': os.environ.get('SQLHOST'),
+        'PORT': os.environ.get('SQLPORT'),
     }
 }
 
@@ -129,3 +144,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'djangocrud/static'),)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if not DEBUG:
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEPLOY')
