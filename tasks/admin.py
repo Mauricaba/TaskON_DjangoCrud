@@ -1,4 +1,7 @@
 from django.contrib import admin
 from .models import Task
 
-admin.site.register(Task)
+class Taskadmin(admin.ModelAdmin):
+  readonly_fields = ("creado",)
+
+admin.site.register(Task, Taskadmin)

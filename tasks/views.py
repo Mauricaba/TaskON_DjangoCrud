@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from django.db import IntegrityError
+from .forms import TaskForm
+from .models import Task
 
 
 def home(request):
@@ -37,7 +39,28 @@ def logueado(request):
 
 
 def tasks(request):
-    return render(request, 'tasks.html')
+    tasks = Task.objects.filter(user=request.user, fecha_terminada__isnull=True)
+    return render(request, 'tasks.html',{
+        'tasks' : tasks
+    })
+
+def create_task(request):
+    if request.method == 'GET':
+        return render(request, 'create_task.html', {
+        'form' : TaskForm
+        })
+    else:
+        try:
+            form = TaskForm(request.POST)
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.save()
+            return redirect('tasks')
+        except ValueError:
+            return render(request, 'create_task.html', {
+                'form' : TaskForm,
+                'error' : 'Inserte datos válidos'
+            })
 
 
 def signout (request):

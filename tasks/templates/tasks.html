@@ -3,5 +3,19 @@
 {% block content %}
 <div>
   <h1>Tareas</h1>
+  <ul>
+    {% for task in tasks %}
+    <li>
+      {% if task.prioridad %}
+        <h2>Importante: {{task.titulo}}</h2>
+      {% else %}
+        <strong>Titulo: {{task.titulo}}</strong>
+      {% endif %}
+      <p>Descripcion: {{task.descripcion}}</p>
+      <p>Usuario: {{task.user.username}}</p>
+    </li>
+    {% endfor %}
+  </ul>
+<a href="/tasks/create/">Crear tarea</a>
 </div>
 {% endblock %}
