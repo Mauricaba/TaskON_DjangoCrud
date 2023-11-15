@@ -1,10 +1,11 @@
 <div class="topnav">
   <a class="active" href="/">Home</a>
-  <a href="/register/">Registro</a>
+  <a href="{% url 'register' %}">Registro</a>
   {% if user.is_authenticated %}
-  <a href="/tasks/">Tareas</a>
-  <a href="/logout/">Salir</a>
+  <a href="{% url 'tasks' %}">Tareas</a>
+  <a href="{% url 'tasks_completed' %}">Tareas Completadas</a>
+  <a href="{% url 'signout' %}">Salir</a>
   {% else %}
-  <a href="/signin/">Entrar Ya!</a>
+  <a href="{% url 'signin' %}">Entrar Ya!</a>
   {% endif %}
 </div>
