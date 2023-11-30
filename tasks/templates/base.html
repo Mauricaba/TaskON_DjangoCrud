@@ -2,13 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/staticfiles/css/src/estilos.css"/>
-    <link rel="stylesheet" href="/staticfiles/css/dist/output.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/src/estilos.css' %}"/>
+    <link rel="stylesheet" href="/static/css/dist/output.css">
     <title>Django Crud APP</title>
-  </head>
+  </head> 
   <body>
     {% include 'navbar.html' %}
     

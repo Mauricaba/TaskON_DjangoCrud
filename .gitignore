@@ -30,6 +30,7 @@ media
 #build/
 develop-eggs/
 dist/
+src/
 downloads/
 eggs/
 .eggs/
